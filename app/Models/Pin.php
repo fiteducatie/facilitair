@@ -28,4 +28,19 @@ class Pin extends Model implements HasMedia
     public function saves() {
         return $this->belongsToMany(User::class, 'save_pin');
     }
+
+    public function likedByUser(){
+        if(!auth()->check()) {
+            return false;
+        }
+        return $this->likes->where('id', auth()->user()->id)->count() > 0;
+    }
+
+
+    public function savedByUser() {
+        if (!auth()->check()) {
+            return false;
+        }
+        return $this->saves->where('id', auth()->user()->id)->count() > 0;
+    }
 }

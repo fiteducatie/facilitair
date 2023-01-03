@@ -8,16 +8,30 @@ class Card extends Component
 {
     public $pin;
 
+    public function mount($pin) {
+        $this->pin = $pin;
+    }
+
     public function render()
     {
         return view('livewire.pins.card');
     }
 
     public function toggleLike() {
-        dd('clicked like button');
+        if(!auth()->user()) {
+            return redirect()->route('login');
+        }
+
+        $this->pin->likes()->toggle(auth()->user()->id);
+        $this->pin->refresh();
     }
 
     public function toggleSave() {
-        dd('clicked save button');
+        if (!auth()->user()) {
+            return redirect()->route('login');
+        }
+
+        $this->pin->saves()->toggle(auth()->user()->id);
+        $this->pin->refresh();
     }
 }

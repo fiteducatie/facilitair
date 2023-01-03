@@ -46,7 +46,9 @@ class PinController extends Controller
      */
     public function show(Pin $pin)
     {
-        //
+        return view('pin.show', [
+            'pin' => $pin
+        ]);
     }
 
     /**
