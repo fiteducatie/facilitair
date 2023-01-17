@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pin;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class PinController extends Controller
@@ -24,7 +25,10 @@ class PinController extends Controller
      */
     public function create()
     {
-        //
+        return view('pins.create',[
+            'tags' => \Spatie\Tags\Tag::all(),
+            'categories' => \App\Models\Category::all()
+        ]);
     }
 
     /**
@@ -35,7 +39,29 @@ class PinController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'file.*' => 'required|image',
+            'description' => 'required',
+            'category' => 'required',
+        ]);
+
+        $pin = Pin::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'short_description' => $request->description,
+            'user_id' => auth()->user()->id,
+            'slug' => \Str::slug($request->title),
+
+        ]);
+        $pin->categories()->attach($request->category);
+        foreach($request->file as $file) {
+
+            $pin->addMedia($file)->toMediaCollection('images');
+        }
+
+
+
     }
 
     /**
@@ -46,7 +72,7 @@ class PinController extends Controller
      */
     public function show(Pin $pin)
     {
-        return view('pin.show', [
+        return view('pins.show', [
             'pin' => $pin
         ]);
     }

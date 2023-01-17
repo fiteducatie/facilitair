@@ -25,7 +25,7 @@
             <p class="test__author font-sm font-light">{{$pin->user->name}}</p>
             <div class="mt-4">
                 {{-- create link button --}}
-                <a href="{{route('pin.show', $pin->id)}}" target="_blank" class="pointer-events-auto font-bold test__link bg-pink-400 hover:bg-pink-600 transition duration-75 py-2 px-4 text-black">MEER</a>
+                <a href="{{route('pin.show', $pin->id)}}" class="pointer-events-auto font-bold test__link bg-pink-400 hover:bg-pink-600 transition duration-75 py-2 px-4 text-black">MEER</a>
 
             </div>
         </div>
