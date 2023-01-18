@@ -10,6 +10,10 @@ module.exports = {
 
     theme: {
         extend: {
+            minHeight: {
+                '300': '300px',
+                '400': '400px'
+            },
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },

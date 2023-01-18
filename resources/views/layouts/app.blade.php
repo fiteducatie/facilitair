@@ -28,7 +28,13 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                <div class="container h-screen flex ">
+                <x-dashboard.sidebar></x-dashboard.sidebar>
+                    <div class="bg-white h-screen flex-1 p-4">
+                     <h1 class="text-4xl font-medium mb-4">Welkom op het dashboard</h1>
+                    {{ $slot }}
+                    </div>
+                </div>
             </main>
         </div>
     </body>

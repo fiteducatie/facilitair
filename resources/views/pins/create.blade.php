@@ -89,10 +89,12 @@
                     this.on("successmultiple", function(files, response) {
                       // Gets triggered when the files have successfully been sent.
                       // Redirect user or notify of success.
+
                     });
                     this.on("errormultiple", function(files, response) {
                       // Gets triggered when there was an error sending the files.
                       // Maybe show form again, and notify user of error
+
                     });
                   }
                 }

@@ -3,5 +3,8 @@
         @foreach($pins as $pin)
             @livewire('pins.card', ['pin' => $pin], key($pin->id . '-card'))
         @endforeach
+        @foreach($pins as $pin)
+            @livewire('pins.card', ['pin' => $pin], key($pin->id . '-card'))
+        @endforeach
     </div>
 </x-guest-layout>

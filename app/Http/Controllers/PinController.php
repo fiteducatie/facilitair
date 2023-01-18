@@ -56,12 +56,8 @@ class PinController extends Controller
         ]);
         $pin->categories()->attach($request->category);
         foreach($request->file as $file) {
-
             $pin->addMedia($file)->toMediaCollection('images');
         }
-
-
-
     }
 
     /**
@@ -108,6 +104,7 @@ class PinController extends Controller
      */
     public function destroy(Pin $pin)
     {
-        //
+        $pin->delete();
+        return redirect()->route('welcome');
     }
 }

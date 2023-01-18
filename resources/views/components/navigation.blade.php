@@ -33,7 +33,7 @@
             </div>
         </div>
     </nav>
-    <div
+    {{-- <div
 
     x-transition:enter="transition ease-out duration-300"
     x-transition:enter-start="opacity-0 scale-90"
@@ -64,7 +64,7 @@
                 </div>
             </div>
         </div>
+ --}}
 
-
-    </div>
+    {{-- </div> --}}
 </div>

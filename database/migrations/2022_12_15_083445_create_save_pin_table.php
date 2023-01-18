@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('save_pin', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users');
-            $table->foreignId('pin_id')->references('id')->on('pins');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('pin_id')->references('id')->on('pins')->onDelete('cascade');
             $table->timestamps();
         });
     }

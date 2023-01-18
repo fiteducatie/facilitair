@@ -1,5 +1,7 @@
  <div x-data="{hover: false}" @mouseover="hover = true" @mouseout="hover = false" class="relative mb-4 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-20">
-    <img class="w-full rounded-md min-h-200" src="https://source.unsplash.com/random/{{$pin->id}}">
+    @if($pin->getMedia('images')->first())
+    <img class="w-full rounded-md min-h-300 object-cover" src="{{$pin->getMedia('images')->first()->getUrl() }}">
+    @endif
     <div x-transition x-show="hover" class="pointer-events-none test__body rounded-md absolute bg-black bg-opacity-50 inset-0 p-8 text-white flex flex-col">
       <div class="relative">
         {{-- show error message --}}

@@ -21,7 +21,6 @@ class Card extends Component
         if(!auth()->user()) {
             return redirect()->route('login');
         }
-
         $this->pin->likes()->toggle(auth()->user()->id);
         $this->pin->refresh();
     }

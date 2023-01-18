@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('like_pin', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('pin_id')->references('id')->on('pins')->onDelete('cascade');
-            $table->timestamps();
+        Schema::table('categories', function (Blueprint $table) {
+            $table->foreignId('parent_category_id')->nullable()->references('id')->on('categories');
         });
     }
 
@@ -28,6 +25,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('like_pin');
+        Schema::table('categories', function (Blueprint $table) {
+            $table->dropForeign(['parent_category_id']);
+            $table->dropColumn('parent_category_id');
+        });
     }
 };
