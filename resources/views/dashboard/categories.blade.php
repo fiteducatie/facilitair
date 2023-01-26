@@ -6,10 +6,18 @@
             <div class="grid md:grid-cols-2 gap-4">
                 @foreach($categories as $category)
                     <div class="bg-gray-200 p-4 rounded-lg">
-                        <h2 class="text-lg font-medium mb-2">
-                            {{ $category->name }}
-                            <span class="text-xs bg-blue-500 text-white px-2 rounded-full">{{ $category->pins->count() }} pins</span>
-                        </h2>
+                        <div class="flex justify-between">
+                            <h2 class="text-lg font-medium mb-2">
+                                {{ $category->name }}
+                                <span class="text-xs bg-blue-500 text-white px-2 rounded-full">{{ $category->pins->count() }} pins</span>
+                            </h2>
+
+                            <form method="post" action="{{route('categories.destroy', $category)}}">
+                                @csrf
+                                @method('delete')
+                                <input type="submit" value="X" class="cursor-pointer bg-red-500 p-2">
+                            </form>
+                        </div>
 
                         {{-- list subcategories --}}
                         <div class="subcategories">

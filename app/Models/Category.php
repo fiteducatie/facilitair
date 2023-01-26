@@ -22,4 +22,8 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_category_id');
     }
 
+    public static function getParents() {
+        return Category::where('parent_category_id', null)->get();
+    }
+
 }

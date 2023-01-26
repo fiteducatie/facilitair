@@ -28,19 +28,20 @@
                             <select class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="category" name="category">
                                 <option value=""></option>
                                 @foreach($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                    <optgroup label="{{$category->name}}">
+                                        @foreach($category->subcategories as $sub)
+                                            <option value="{{$sub->id}}">{{$sub->name}}</option>
+                                        @endforeach
+                                    </optgroup>
+
                                 @endforeach
 
                             </select>
                         </div>
 
-                         <div class="mb-4 md:w-1/2">
-                            <label class="block text-gray-700 font-medium mb-2" for="tags">
-                              Tags <i>(in ontwikkeling)</i>
-                            </label>
-                            <input class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="tags" name="tags[]">
+                        <div class="mb-4 md:w-1/2">
+                               @livewire('tags.tag-input')
                         </div>
-
 
                         <div class="mb-4 md:w-1/2">
                             <label class="block text-gray-700 font-medium mb-2" for="description">
@@ -48,6 +49,7 @@
                             </label>
                             <textarea rows="10" class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="description" name="description"></textarea>
                         </div>
+
                         <button type="submit" class="bg-indigo-500 text-white p-2 rounded-lg hover:bg-indigo-600">Opslaan</button>
 
                     </div>

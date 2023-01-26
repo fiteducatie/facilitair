@@ -40,7 +40,7 @@
                 </div>
               </div>
                 <p class="text-sm">Geupload door: <b>{{$pin->user->name}}</b></p>
-                <p class="text-sm">{{$pin->description}}</p>
+                <p class="text-2xl font-roboto my-4 text-gray-600">{{$pin->description}}</p>
 
                 <div class="meta">
                     <div class="likes">

@@ -34,7 +34,10 @@
 
       </div>
       <div class="mt-auto sm:hidden md:block">
-        <span class="test__tag bg-white bg-opacity-60 py-1 px-4 rounded-md text-black">#tag</span>
+        @foreach($pin->tags as $tag)
+        <span class="test__tag bg-white bg-opacity-60 py-1 px-4 rounded-md text-black">#{{$tag->name}}</span>
+
+        @endforeach
       </div>
 
     </div>

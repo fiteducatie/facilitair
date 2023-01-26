@@ -27,7 +27,7 @@ class PinController extends Controller
     {
         return view('pins.create',[
             'tags' => \Spatie\Tags\Tag::all(),
-            'categories' => \App\Models\Category::all()
+            'categories' => \App\Models\Category::where('parent_category_id', null)->with('subcategories')->get(),
         ]);
     }
 
@@ -39,6 +39,7 @@ class PinController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'title' => 'required',
             'file.*' => 'required|image',
@@ -52,12 +53,25 @@ class PinController extends Controller
             'short_description' => $request->description,
             'user_id' => auth()->user()->id,
             'slug' => \Str::slug($request->title),
-
         ]);
         $pin->categories()->attach($request->category);
+        $pin->attachTags($this->stripTags($request->tags));
+
         foreach($request->file as $file) {
             $pin->addMedia($file)->toMediaCollection('images');
         }
+    }
+
+    public function stripTags(string $tags) {
+        $tags = explode(',', $tags);
+        $tags = array_map('trim', $tags);
+        $tags = array_map(function($val){
+            return ltrim($val, '#');
+        }, $tags);
+        $tags = array_map('strtolower', $tags);
+        $tags = array_unique($tags);
+        return $tags;
+
     }
 
     /**
@@ -70,6 +84,12 @@ class PinController extends Controller
     {
         return view('pins.show', [
             'pin' => $pin
+        ]);
+    }
+
+    public function favorites() {
+        return view('favorites', [
+            'pins' => auth()->user()->favorites
         ]);
     }
 

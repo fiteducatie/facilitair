@@ -27,12 +27,16 @@ Route::get('/', function () {
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
+
+    Route::get('/pin/favorites', [PinController::class, 'favorites'])->name('pin.favorites');
     Route::get('/pin/create', [PinController::class, 'create'])->name('pin.create');
     Route::get('/pin', [PinController::class, 'index'])->name('pin.index');
+
     Route::post('/pin', [PinController::class, 'store'])->name('pin.store');
     Route::get('/pin/{pin}/edit', [PinController::class, 'edit'])->name('pin.edit');
     Route::patch('/pin/{pin}', [PinController::class, 'update'])->name('pin.update');
     Route::delete('/pin/{pin}', [PinController::class, 'destroy'])->name('pin.destroy');
+
 });
 
 Route::get('pin/{pin}', [PinController::class, 'show'])->name('pin.show');

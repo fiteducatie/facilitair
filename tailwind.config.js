@@ -16,7 +16,18 @@ module.exports = {
             },
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+                roboto: ['Roboto', 'sans-serif'],
             },
+            keyframes: {
+                wiggle: {
+                  '0%': { transform: 'rotate(-3deg)' },
+                  '50%': { transform: 'rotate(3deg)' },
+                  '100%': { transform: 'rotate(0)' },
+                }
+            },
+            animation: {
+                wiggle: 'wiggle 250ms ease-in-out 2',
+            }
         },
     },
 

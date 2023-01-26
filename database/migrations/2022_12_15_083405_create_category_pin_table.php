@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('category_pin', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->references('id')->on('categories');
+            $table->foreignId('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreignId('pin_id')->references('id')->on('pins')->onDelete('cascade');
             $table->timestamps();
         });

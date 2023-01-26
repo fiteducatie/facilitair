@@ -44,4 +44,12 @@ class User extends Authenticatable implements HasMedia
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function likes() {
+        return $this->belongsToMany('App\Models\Pin', 'like_pin');
+    }
+
+    public function favorites() {
+        return $this->belongsToMany('App\Models\Pin', 'save_pin');
+    }
 }
