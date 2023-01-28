@@ -1,3 +1,4 @@
+
  <div x-data="{hover: false}" @mouseover="hover = true" @mouseout="hover = false" class="relative mb-4 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-20">
     @if($pin->getMedia('images')->first())
     <img class="w-full rounded-md min-h-300 object-cover" src="{{$pin->getMedia('images')->first()->getUrl() }}">
@@ -35,7 +36,7 @@
       </div>
       <div class="mt-auto sm:hidden md:block">
         @foreach($pin->tags as $tag)
-        <span class="test__tag bg-white bg-opacity-60 py-1 px-4 rounded-md text-black">#{{$tag->name}}</span>
+        <span class="test__tag bg-white bg-opacity-60 py-1 px-4 rounded-md text-black"><a href="{{route(request()->route()->getName(), ['t' => $tag->name])}}">#{{$tag->name}}</a> </span>
 
         @endforeach
       </div>

@@ -17,14 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $pins = \App\Models\Pin::all();
-    return view('welcome', [
-        'pins' => $pins
-    ]);
-})->name('welcome');
 
-
+Route::get('/', [PinController::class, 'index'])->name('welcome');
 
 Route::middleware(['auth', 'verified'])->group(function () {
 

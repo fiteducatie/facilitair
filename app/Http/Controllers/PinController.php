@@ -15,7 +15,30 @@ class PinController extends Controller
      */
     public function index()
     {
-        //
+        if(request()->get('c')) {
+            $category = \App\Models\Category::where('id', request()->get('c'))->first();
+            // dd($category);
+            $pins = $category->pins;
+
+        } else if(request()->get('t')) {
+            $pins = \App\Models\Pin::withAnyTags(request()->get('t'))->get();
+
+        } else if(request()->get('s')) {
+            $pins = \App\Models\Pin::where('title', 'like', '%'.request()->get('s').'%')->get();
+            $pinsFromTag = \App\Models\Pin::withAnyTags(request()->get('s'))->get();
+            if ($pinsFromTag) {
+                $pins[] = $pinsFromTag;
+            }
+
+            $pins = collect($pins)->flatten()->unique('id');
+
+        } else {
+            $pins = \App\Models\Pin::all();
+        }
+
+        return view('welcome', [
+            'pins' => $pins
+        ]);
     }
 
     /**
