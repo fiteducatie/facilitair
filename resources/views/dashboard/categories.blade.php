@@ -1,14 +1,18 @@
  {{--layout app  --}}
 <x-app-layout>
             <div class="flex justify-between py-4">
-                <h1 class="text-2xl font-medium mb-4">Categorieën</h1>
+                <h1 class="text-2xl font-medium mb-4">Categorieën
+
+                </h1>
+
+
             </div>
             <div class="grid md:grid-cols-2 gap-4">
                 @foreach($categories as $category)
                     <div class="bg-gray-200 p-4 rounded-lg">
                         <div class="flex justify-between">
                             <h2 class="text-lg font-medium mb-2">
-                                {{ $category->name }}
+                                <a href="{{route('categories.edit', $category->id)}}">{{ $category->name }}</a>
                                 <span class="text-xs bg-blue-500 text-white px-2 rounded-full">{{ $category->pins->count() }} pins</span>
                             </h2>
 
@@ -24,7 +28,7 @@
                             <p class="font-bold">Subcategorieën</p>
                              <ul class="pl-4">
                               @forelse($category->subcategories as $sub)
-                                <li>{{$sub->name}}</li>
+                                <li><a href="{{route('categories.edit', $sub->id)}}">{{$sub->name}}</a></li>
                               @empty
                                 <li class="text-red-500">Geen subcategorieën</li>
                               @endforelse

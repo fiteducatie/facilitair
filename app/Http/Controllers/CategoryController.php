@@ -49,6 +49,11 @@ class CategoryController extends Controller
         return back();
     }
 
+    public function editCategories() {
+        $categories = Category::where('parent_category_id', null)->get();
+        return view('dashboard.editCategory', compact('categories'));
+    }
+
     /**
      * Display the specified resource.
      *
@@ -68,7 +73,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        $category = Category::findOrFail($category->id);
+        return view('dashboard.editCategory', compact('category'));
     }
 
     /**
@@ -80,7 +86,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $cat = Category::findOrFail($category->id);
+        $cat->name = $request->name;
+        $cat->slug = \Str::slug($request->name);
+        $cat->description = $request->description;
+        $cat->parent_category_id = $request->parent_category_id;
+        $cat->save();
+        return back();
+
     }
 
     /**
@@ -93,6 +106,6 @@ class CategoryController extends Controller
     {
         // delete category
         $category->delete();
-        return back();
+        return redirect()->route('dashboard.categories');
     }
 }

@@ -39,11 +39,13 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/dashboard/categories', [DashboardController::class, 'categories'] )
-    ->name('dashboard.categories');
+
 
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard/categories', [DashboardController::class, 'categories'])
+        ->name('dashboard.categories');
+
     Route::resource('categories', CategoryController::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
