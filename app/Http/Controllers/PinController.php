@@ -83,6 +83,11 @@ class PinController extends Controller
         foreach($request->file as $file) {
             $pin->addMedia($file)->toMediaCollection('images');
         }
+
+        return response()->json([
+            'message' => 'Pin created successfully',
+            'pin' => $pin
+        ], 200);
     }
 
     public function stripTags(string $tags) {

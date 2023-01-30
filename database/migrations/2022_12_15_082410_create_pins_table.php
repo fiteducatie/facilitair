@@ -19,8 +19,8 @@ return new class extends Migration
             $table->enum('status', ['published', 'draft', 'deleted']);
             $table->string('title');
             $table->string('slug');
-            $table->string('short_description');
-            $table->string('description');
+            $table->text('short_description');
+            $table->text('description');
             $table->timestamps();
         });
     }
