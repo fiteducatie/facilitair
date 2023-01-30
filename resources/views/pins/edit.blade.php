@@ -6,7 +6,7 @@
         <div class="md:w-3/4 md:flex flex-row shadow-inner">
 
             <form  id="upload-form" class="dropzone w-full" action="{{route('pin.store')}}">
-                 <h3 class="text-2xl">Nieuwe pin maken</h3>
+                 <h3 class="text-2xl">Pin wijzigen</h3>
                 @csrf
                 <div class="md:flex gap-4 justify-between">
                     <div class="uploadzone md:w-1/4">
@@ -18,7 +18,7 @@
                             <label class="block text-gray-700 font-medium mb-2" for="title">
                               Titel
                             </label>
-                            <input class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="title" name="title">
+                            <input value="{{$pin->title}}" class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="title" name="title">
                           </div>
 
                         <div class="mb-4 md:w-1/2">
@@ -30,7 +30,7 @@
                                 @foreach($categories as $category)
                                     <optgroup label="{{$category->name}}">
                                         @foreach($category->subcategories as $sub)
-                                            <option value="{{$sub->id}}">{{$sub->name}}</option>
+                                            <option @if($sub->id == $pin->categories[0]->id) selected @endif value="{{$sub->id}}">{{$sub->name}}</option>
                                         @endforeach
                                     </optgroup>
 
@@ -40,14 +40,32 @@
                         </div>
 
                         <div class="mb-4 md:w-1/2">
-                               @livewire('tags.tag-input')
+                               @livewire('tags.tag-input', ['old_tags' => $pin->tags])
                         </div>
 
                         <div class="mb-4 md:w-1/2">
                             <label class="block text-gray-700 font-medium mb-2" for="description">
                               Beschrijving
                             </label>
-                            <textarea rows="10" class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="description" name="description"></textarea>
+                            <textarea rows="10" class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="description" name="description">{{$pin->description}}</textarea>
+                        </div>
+
+                        <div class="mb-4 md:w-1/2">
+                            {{-- loop over the images --}}
+                            @foreach($pin->getMedia('images') as $image)
+
+                                <div class="flex flex-row mb-4">
+                                    <img class="w-20 h-20" src="{{$image->getUrl()}}" alt="">
+                                    <div class="flex flex-col justify-center">
+                                        <form action="{{route('pin.removeImage', $pin)}}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name="media_id" value="{{$image->id}}">
+                                            <input class="!cursor-pointer" type="submit" value="Verwijderen">
+                                        </form>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
 
                         <button type="submit" class="bg-indigo-500 text-white p-2 rounded-lg hover:bg-indigo-600">Opslaan</button>

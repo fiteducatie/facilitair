@@ -11,8 +11,12 @@ class TagInput extends Component
     public $search = '';
     public $chosenTags = [];
     public $selectedTags = [];
-    public function mount() {
+
+    public function mount($old_tags = null) {
         $this->tags = Tag::all();
+        if($old_tags) {
+            $this->chosenTags = $old_tags->pluck('name')->toArray();
+        }
     }
 
     public function render()

@@ -28,8 +28,8 @@
                   </button>
                   <div x-show="open" class="absolute right-0 z-10 w-48 bg-white rounded-md shadow-md mt-1 py-1">
                     <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white">Delen</a>
-                    @if($pin->user_id == Auth::id())
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white">Wijzigen</a>
+                    @if($pin->user_id == Auth::id() || Auth::user()->hasRole('admin'))
+                    <a href="{{route('pin.edit', $pin->id)}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white">Wijzigen</a>
                     <a @click="confirmDelete = true" x-show="!confirmDelete" href="#" class="block px-4 py-2 text-sm text-gray-700 bg-red-400 hover:bg-indigo-500 hover:text-white font-bold">Verwijderen</a>
                     <a @click="confirmDelete = false" x-show="confirmDelete" href="#" class="block px-4 py-2 text-sm text-gray-700 bg-yellow-400 hover:bg-indigo-500 hover:text-white font-bold">Annuleren</a>
                     <form x-show="confirmDelete" method="post" action="{{route('pin.destroy', $pin)}}">

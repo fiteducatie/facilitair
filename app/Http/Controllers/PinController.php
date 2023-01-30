@@ -90,6 +90,12 @@ class PinController extends Controller
         ], 200);
     }
 
+    public function removeImage(Pin $pin, Request $request) {
+
+        $pin->deleteMedia($request->media_id);
+        return back();
+    }
+
     public function stripTags(string $tags) {
         $tags = explode(',', $tags);
         $tags = array_map('trim', $tags);
@@ -129,12 +135,15 @@ class PinController extends Controller
      */
     public function edit(Pin $pin)
     {
-        $pin = Pin::with('categories')->where('id', $pin->id)->first();
-        return view('pins.edit', [
-            'pin' => $pin,
-            'tags' => \Spatie\Tags\Tag::all(),
-            'categories' => \App\Models\Category::where('parent_category_id', null)->with('subcategories')->get(),
-        ]);
+        if(\Auth::user()->id == $pin->user_id || \Auth::user()->role == 'admin') {
+            $pin = Pin::with('categories')->where('id', $pin->id)->first();
+            return view('pins.edit', [
+                'pin' => $pin,
+                'tags' => \Spatie\Tags\Tag::all(),
+                'categories' => \App\Models\Category::where('parent_category_id', null)->with('subcategories')->get(),
+            ]);
+        }
+
     }
 
     /**
