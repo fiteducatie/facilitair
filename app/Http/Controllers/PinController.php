@@ -129,7 +129,12 @@ class PinController extends Controller
      */
     public function edit(Pin $pin)
     {
-        //
+        $pin = Pin::with('categories')->where('id', $pin->id)->first();
+        return view('pins.edit', [
+            'pin' => $pin,
+            'tags' => \Spatie\Tags\Tag::all(),
+            'categories' => \App\Models\Category::where('parent_category_id', null)->with('subcategories')->get(),
+        ]);
     }
 
     /**

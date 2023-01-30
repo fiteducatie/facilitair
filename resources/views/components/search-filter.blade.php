@@ -1,4 +1,4 @@
-<div class="info p-4 column min-h-300 mx-auto mt-4" style="background-color: #e5e5f7;
+<div class="info p-4 w-300 column min-h-300 mx-auto mt-4" style="background-color: #e5e5f7;
 
     border-radius: 10px;
     background-image:  radial-gradient(hotpink 1px, transparent 0.5px), radial-gradient(hotpink 1px, #eee 0.5px);

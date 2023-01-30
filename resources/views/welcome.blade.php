@@ -2,7 +2,7 @@
     <div class="md:hidden">
         <x-search-filter />
     </div>
-    @if(count($pins) > 1)
+    @if(count($pins) > 2)
      <div class="m-4 columns-2 md:columns-3 lg:columns-4">
     @else
      <div class="m-4 flex w-2/3 items-start gap-4">

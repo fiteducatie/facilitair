@@ -34,12 +34,12 @@
         </div>
 
       </div>
-      <div class="mt-auto sm:hidden md:block">
-        @foreach($pin->tags as $tag)
-        <span class="test__tag bg-white bg-opacity-60 py-1 px-4 rounded-md text-black"><a href="{{route(request()->route()->getName(), ['t' => $tag->name, 'name' => $tag->name])}}">#{{$tag->name}}</a> </span>
+         <div class="mt-auto sm:hidden md:block">
+            @foreach($pin->tags as $tag)
+            <span class="test__tag m-2 bg-white bg-opacity-60 py-1 px-4 rounded-md text-black"><a class="pointer-events-auto" href="{{route(request()->route()->getName(), ['t' => $tag->name, 'name'=> $tag->name])}}">#{{$tag->name}}</a> </span>
 
-        @endforeach
-      </div>
+            @endforeach
+          </div>
 
     </div>
 
