@@ -62,7 +62,7 @@
 
                     <div class="mt-2 description">
                         <h4 class="text-lg font-bold">Datum gebruikname</h4>
-                        <p class="font-roboto text-gray-600">{{Date('d-m-Y', strtotime($pin->pinMeta->datum_gebruikname)) ?? ''}}</p>
+                        <p class="font-roboto text-gray-600">@if($pin->pinMeta){{Date('d-m-Y', strtotime($pin->pinMeta->datum_gebruikname)) ?? ''}} @endif</p>
                     </div>
 
                     <div class="mt-2 description">
