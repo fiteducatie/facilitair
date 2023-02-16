@@ -20,6 +20,10 @@ class Pin extends Model implements HasMedia
         return $this->belongsTo(User::class);
     }
 
+    public function pinMeta() {
+        return $this->hasOne(PinMeta::class);
+    }
+
     public function categories() {
         return $this->belongsToMany(Category::class, 'category_pin');
     }

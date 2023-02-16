@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pin;
+use App\Models\PinMeta;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
@@ -77,12 +78,26 @@ class PinController extends Controller
             'user_id' => auth()->user()->id,
             'slug' => \Str::slug($request->title),
         ]);
+
+        $pinMeta = PinMeta::create([
+            'pin_id' => $pin->id,
+            'school_name' => $request->school_name,
+            'school_location' => $request->school_location,
+            'datum_gebruikname' => $request->datum_gebruikname,
+            'reden_bijzonderheid' => $request->reden_bijzonderheid,
+            'meningen' => $request->meningen,
+            'primair_doel' => $request->primair_doel,
+            'bijzonderheden' => $request->bijzonderheden,
+            'betrokkenen' => $request->betrokkenen,
+        ]);
+
         $pin->categories()->attach($request->category);
         $pin->attachTags($this->stripTags($request->tags));
 
         foreach($request->file as $file) {
             $pin->addMedia($file)->toMediaCollection('images');
         }
+
 
         return response()->json([
             'message' => 'Pin created successfully',
@@ -155,7 +170,47 @@ class PinController extends Controller
      */
     public function update(Request $request, Pin $pin)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'category' => 'required',
+        ]);
+
+        $pin->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'short_description' => $request->description,
+            'slug' => \Str::slug($request->title),
+        ]);
+
+        $pin->pinMeta()->update([
+            'school_name' => $request->school_name,
+            'school_location' => $request->school_location,
+            'datum_gebruikname' => $request->datum_gebruikname,
+            'reden_bijzonderheid' => $request->reden_bijzonderheid,
+            'meningen' => $request->meningen,
+            'primair_doel' => $request->primair_doel,
+            'bijzonderheden' => $request->bijzonderheden,
+            'betrokkenen' => $request->betrokkenen,
+        ]);
+
+        $pin->categories()->sync($request->category);
+        $pin->syncTags($this->stripTags($request->tags));
+
+        if($request->file) {
+            foreach ($request->file as $file) {
+                $pin->addMedia($file)->toMediaCollection('images');
+            }
+
+            return response()->json([
+                'message' => 'Pin updated successfully',
+                'pin' => $pin
+            ], 200);
+        } else {
+            return back()->with('message', 'Pin updated successfully');
+        }
+
+
     }
 
     /**

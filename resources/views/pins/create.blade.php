@@ -7,6 +7,11 @@
 
             <form  id="upload-form" class="dropzone w-full" action="{{route('pin.store')}}">
                  <h3 class="text-2xl">Nieuwe pin maken</h3>
+                 <div id="errors" class="errors hidden">
+                    <ul id="errorList" class="list-disc list-inside text-red-500">
+
+                    </ul>
+                 </div>
                 @csrf
                 <div class="md:flex gap-4 justify-between">
                     <div class="uploadzone md:w-1/4">
@@ -45,9 +50,65 @@
 
                         <div class="mb-4 md:w-1/2">
                             <label class="block text-gray-700 font-medium mb-2" for="description">
-                              Beschrijving
+                              Korte beschrijving <i><small>(gebruikt voor de voorkant van de pin)</small></i>
                             </label>
-                            <textarea rows="10" class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="description" name="description"></textarea>
+                            <textarea rows="5" class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="description" name="description"></textarea>
+                        </div>
+
+                        <div class="mb-4 md:w-1/2">
+                            <label class="block text-gray-700 font-medium mb-2" for="">
+                                Naam school
+                            </label>
+                            <input class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="school_name" name="school_name">
+                        </div>
+
+                        <div class="mb-4 md:w-1/2">
+                            <label class="block text-gray-700 font-medium mb-2" for="">
+                                Locatie school
+                            </label>
+                            <input class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="school_location" name="school_location">
+                        </div>
+
+                         <div class="mb-4 md:w-1/2">
+                            <label class="block text-gray-700 font-medium mb-2" for="">
+                                Datum gebruikname
+                            </label>
+                            <input class="border border-gray-400 p-2 rounded-lg w-full" type="date" id="datum_gebruikname" name="datum_gebruikname">
+                        </div>
+
+                        <div class="mb-4 md:w-1/2">
+                            <label class="block text-gray-700 font-medium mb-2" for="description">
+                                Waarom ik deze pin wil laten zien
+                            </label>
+                            <textarea rows="5" class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="reden_bijzonderheid" name="reden_bijzonderheid"></textarea>
+                        </div>
+
+                        <div class="mb-4 md:w-1/2">
+                            <label class="block text-gray-700 font-medium mb-2" for="description">
+                              Dit zeggen gebruikers erover
+                            </label>
+                            <textarea rows="5" class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="meningen" name="meningen"></textarea>
+                        </div>
+
+                        <div class="mb-4 md:w-1/2">
+                            <label class="block text-gray-700 font-medium mb-2" for="description">
+                              Waar wordt het voornamelijk voor gebruikt?
+                            </label>
+                            <textarea rows="5" class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="primair_doel" name="primair_doel"></textarea>
+                        </div>
+
+                        <div class="mb-4 md:w-1/2">
+                            <label class="block text-gray-700 font-medium mb-2" for="description">
+                              Zijn er bijzonderheden te melden?
+                            </label>
+                            <textarea rows="5" class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="bijzonderheden" name="bijzonderheden"></textarea>
+                        </div>
+
+                        <div class="mb-4 md:w-1/2">
+                            <label class="block text-gray-700 font-medium mb-2" for="description">
+                              Betrokkenen (leveranciers, ontwerpers, etc.)
+                            </label>
+                            <textarea rows="5" class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="betrokkenen" name="betrokkenen"></textarea>
                         </div>
 
                         <button type="submit" class="bg-indigo-500 text-white p-2 rounded-lg hover:bg-indigo-600">Opslaan</button>
@@ -79,7 +140,11 @@
                       // Make sure that the form isn't actually being sent.
                       e.preventDefault();
                       e.stopPropagation();
-                      myDropzone.processQueue();
+                      if( myDropzone.getQueuedFiles().length > 0 ) {
+                        myDropzone.processQueue();
+                      } else {
+                        alert('geen afbeeldingen geselecteerd');
+                      }
                     });
 
                     // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
@@ -91,12 +156,22 @@
                     this.on("successmultiple", function(files, response) {
                       // Gets triggered when the files have successfully been sent.
                       // Redirect user or notify of success.
+                      console.log(response);
 
                     });
                     this.on("errormultiple", function(files, response) {
                       // Gets triggered when there was an error sending the files.
                       // Maybe show form again, and notify user of error
+                        console.log('there was an error', response);
+                        // scroll to top
+                        window.scrollTo(0, 0);
+                        // show error message
+                        document.getElementById('errors').classList.remove('hidden');
+                        document.getElementById('errorList').innerHTML = '';
 
+                        for( error in response.errors) {
+                            document.getElementById('errorList').innerHTML += '<li>' + response.errors[error] + '</li>';
+                        }
                     });
                   }
                 }
