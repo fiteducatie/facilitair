@@ -43,8 +43,62 @@
                   </div>
                 </div>
               </div>
-                <p class="text-sm">Geupload door: <b>{{$pin->user->name}}</b></p>
-                <p class="text-2xl font-roboto my-4 text-gray-600">{{$pin->description}}</p>
+                <div class="pin-info">
+                    <p class="text-sm">Geupload door: <b>{{$pin->user->name}}</b></p>
+                    <div class="mt-2 description">
+                        <h4 class="text-lg font-bold">Korte beschrijving</h4>
+                        <p class="font-roboto text-gray-600">{{$pin->description}}</p>
+                    </div>
+
+                    <div class="mt-2 description">
+                        <h4 class="text-lg font-bold">School</h4>
+                        <p class="font-roboto text-gray-600">{{$pin->pinMeta->school_name ?? ''}}</p>
+                    </div>
+
+                    <div class="mt-2 description">
+                        <h4 class="text-lg font-bold">Locatie in schoolgebouw</h4>
+                        <p class="font-roboto text-gray-600">{{$pin->pinMeta->school_location ?? ''}}</p>
+                    </div>
+
+                    <div class="mt-2 description">
+                        <h4 class="text-lg font-bold">Datum gebruikname</h4>
+                        <p class="font-roboto text-gray-600">{{Date('d-m-Y', strtotime($pin->pinMeta->datum_gebruikname)) ?? ''}}</p>
+                    </div>
+
+                    <div class="mt-2 description">
+                        <h4 class="text-lg font-bold">Waarom deze pin</h4>
+                        <p class="font-roboto text-gray-600">{{$pin->pinMeta->reden_bijzonderheid ?? ''}}</p>
+                    </div>
+
+                    <div class="mt-2 description">
+                        <h4 class="text-lg font-bold">Wat gebruikers er over zeggen</h4>
+                        <p class="font-roboto text-gray-600">{{$pin->pinMeta->meningen ?? ''}}</p>
+                    </div>
+
+                    <div class="mt-2 description">
+                        <h4 class="text-lg font-bold">Waar wordt het voornamelijk voor gebruikt?</h4>
+                        <p class="font-roboto text-gray-600">{{$pin->pinMeta->primair_doel ?? ''}}</p>
+                    </div>
+
+                    <div class="mt-2 description">
+                        <h4 class="text-lg font-bold">Overige bijzonderheden?</h4>
+                        <p class="font-roboto text-gray-600">{{$pin->pinMeta->bijzonderheden ?? ''}}</p>
+                    </div>
+
+                    <div class="mt-2 description">
+                        <h4 class="text-lg font-bold">Betrokken partijen</h4>
+                        <p class="font-roboto text-gray-600">{{$pin->pinMeta->betrokkenen ?? ''}}</p>
+                    </div>
+
+
+
+
+
+
+
+
+                </div>
+
 
                 <div class="meta">
                     <div class="likes">
