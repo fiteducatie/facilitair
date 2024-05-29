@@ -36,7 +36,7 @@ border: 1px solid rgba(255, 255, 255, 0.3);
                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white">Delen</a>
                 @auth
                     @if($pin->user_id == Auth::id() || Auth::user()->hasRole('admin'))
-                    <a href="{{route('pin.edit', $pin->id)}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white">Wijzigen</a>
+                    <a href="{{route('filament.app.resources.pins.edit', $pin->id)}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white">Wijzigen</a>
                     <a @click="confirmDelete = true" x-show="!confirmDelete" href="#" class="block px-4 py-2 text-sm text-gray-700 bg-red-400 hover:bg-indigo-500 hover:text-white font-bold">Verwijderen</a>
                     <a @click="confirmDelete = false" x-show="confirmDelete" href="#" class="block px-4 py-2 text-sm text-gray-700 bg-yellow-400 hover:bg-indigo-500 hover:text-white font-bold">Annuleren</a>
                     <form x-show="confirmDelete" method="post" action="{{route('pin.destroy', $pin)}}">
@@ -108,8 +108,6 @@ border: 1px solid rgba(255, 255, 255, 0.3);
                     <p class="font-roboto text-gray-600">{{$pin->pinMeta->betrokkenen ?? ''}}</p>
                 </div>
             </div>
-
-
             <div class="meta">
                 <div class="likes">
                     <p>

@@ -1,7 +1,7 @@
 
  <div x-data="{hover: false}" @mouseover="hover = true" @mouseout="hover = false" class="relative mb-4 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-20">
-    @if($pin->getMedia('images')->first())
-        <img class="w-full rounded-md min-h-300 object-cover" src="{{$pin->getMedia('images')->first()->getUrl() }}">
+    @if($pin->getMedia('main_image')->first() || $pin->getMedia('images')->first())
+        <img class="w-full rounded-md min-h-300 object-cover" src="{{$pin->getMedia('main_image')->first() ? $pin->getMedia('main_image')->first()->getUrl()  : $pin->getMedia('images')->first()->getUrl() }}">
     @else
         <img class="w-full rounded-md min-h-300 object-cover" src="https://fakeimg.pl/600x400">
     @endif

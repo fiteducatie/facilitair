@@ -189,12 +189,10 @@ class PinController extends Controller
                 $pin->addMedia($file)->toMediaCollection('images');
             }
 
+        } else {
+            return back()->with('success', 'Pin updated successfully');
         }
 
-        return response()->json([
-            'message' => 'Pin updated successfully',
-            'pin' => $pin->id
-        ], 200);
 
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Tags;
+namespace App\Livewire\Tags;
 
 use Livewire\Component;
 use Spatie\Tags\Tag;

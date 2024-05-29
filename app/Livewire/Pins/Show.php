@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Pins;
+namespace App\Livewire\Pins;
 
 use Livewire\Component;
 

@@ -22,7 +22,12 @@
         <div class="md:w-3/4 md:flex flex-row shadow-inner">
 
             <form method="post"  id="upload-form" class="dropzone w-full" action="{{route('pin.update', $pin)}}">
-                 <h3 class="text-2xl">Pin wijzigen</h3>
+                @if(session('success'))
+                <div class="bg-green-500 text-white p-2 rounded-lg">
+                    {{session('success')}}
+                </div>
+                @endif
+                <h3 class="text-2xl">Pin wijzigen</h3>
                 @csrf
                 @method('PATCH')
                 <div class="md:flex gap-4 justify-between">
@@ -35,14 +40,16 @@
                             <label class="block text-gray-700 font-medium mb-2" for="title">
                               Titel
                             </label>
-                            <input value="{{$pin->title}}" class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="title" name="title">
+                            @error('title') <span class="text-red-500">{{ $message }}</span> @enderror
+                            <input required value="{{$pin->title}}" class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="title" name="title">
                           </div>
 
                         <div class="mb-4 md:w-1/2">
                             <label class="block text-gray-700 font-medium mb-2" for="category">
                               Categorie
                             </label>
-                            <select class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="category" name="category">
+                            @error('category') <span class="text-red-500">{{ $message }}</span> @enderror
+                            <select required class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="category" name="category">
                                 <option value=""></option>
                                 @foreach($categories as $category)
                                     <optgroup label="{{$category->name}}">
@@ -64,6 +71,8 @@
                             <label class="block text-gray-700 font-medium mb-2" for="description">
                               Korte beschrijving <i><small>(gebruikt voor de voorkant van de pin)</small></i>
                             </label>
+                            @error('description') <span class="text-red-500">{{ $message }}</span> @enderror
+
                             <textarea required rows="5" class="border border-gray-400 p-2 rounded-lg w-full" type="text" id="description" name="description">{{$pin->description}}</textarea>
                         </div>
 

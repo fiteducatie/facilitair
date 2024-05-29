@@ -32,12 +32,12 @@
                             </span>
                             @endauth
                         </a>
-                        <a href="{{route('pin.create')}}" class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                        <a href="{{route('filament.app.resources.pins.create')}}" class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
                             + Nieuw
                         </a>
                         @auth
                             @if(\Auth::user()->hasRole('admin'))
-                            <a href="{{route('dashboard')}}" class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                            <a href="{{route('filament.admin.pages.dashboard')}}" class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
                                 <b> Dashboard </b>
                             </a>
                             @endif
@@ -63,15 +63,12 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('profile.edit')">
-                                    {{ __('Profile') }}
-                                </x-dropdown-link>
 
                                 <!-- Authentication -->
-                                <form method="POST" action="{{ route('logout') }}">
+                                <form method="POST" action="app/logout">
                                     @csrf
 
-                                    <x-dropdown-link :href="route('logout')"
+                                    <x-dropdown-link :href="'app/logout'"
                                             onclick="event.preventDefault();
                                                         this.closest('form').submit();">
                                         {{ __('Log Out') }}
@@ -118,13 +115,13 @@
                         Favoriete Pins <span class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">{{\Auth::user()->favorites->count()}}</span>
                     </a>
                     @endauth
-                    <a href="{{route('pin.create')}}" class=" hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">+ Nieuw</a>
+                    <a href="{{route('filament.app.resources.pins.create')}}" class=" hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">+ Nieuw</a>
                     @auth
-                    <a class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <a class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" href="app/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Logout
                     </a>
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    <form id="logout-form" action="{{ route('filament.app.auth.logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
                     @endauth
