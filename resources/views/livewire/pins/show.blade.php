@@ -1,12 +1,17 @@
 <div class="mt-4 flex justify-center min-h-screen" >
     <div class="md:w-3/4  gap-4 md:flex flex-row m-4">
         <div x-data="{
-            activeImage: '@if($pin->getMedia('images')->first()) {{$pin->getMedia('images')->first()->getUrl()}} @endif',
+            activeImage: '@if($pin->getMedia('main_image')->first()) {{$pin->getMedia('main_image')->first()->getUrl()}} @elseif($pin->getMedia('images')->first()) {{$pin->getMedia('images')->first()->getUrl()}} @else https://fakeimg.pl/600x400 @endif,
 
         }" class="md:w-1/2">
             <img class="w-full" :src="activeImage" alt="">
             <div class="carousel">
                 <div class="flex flex-wrap">
+                    @if($pin->getMedia('main_image')->first())
+                        <div class="p-2">
+                            <img class="cursor-pointer" @click="activeImage = `{{$pin->getMedia('main_image')->first()->getUrl()}}`" class="w-full" src="{{$pin->getMedia('main_image')->first()->getUrl()}}" alt="">
+                        </div>
+                    @endif
                     @foreach($pin->getMedia('images') as $image)
                         <div class="w-1/4 p-2">
                             <img class="cursor-pointer" @click="activeImage = `{{$image->getUrl()}}`" class="w-full" src="{{$image->getUrl()}}" alt="">
@@ -37,13 +42,7 @@ border: 1px solid rgba(255, 255, 255, 0.3);
                 @auth
                     @if($pin->user_id == Auth::id() || Auth::user()->hasRole('admin'))
                     <a href="{{route('filament.app.resources.pins.edit', $pin->id)}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white">Wijzigen</a>
-                    <a @click="confirmDelete = true" x-show="!confirmDelete" href="#" class="block px-4 py-2 text-sm text-gray-700 bg-red-400 hover:bg-indigo-500 hover:text-white font-bold">Verwijderen</a>
-                    <a @click="confirmDelete = false" x-show="confirmDelete" href="#" class="block px-4 py-2 text-sm text-gray-700 bg-yellow-400 hover:bg-indigo-500 hover:text-white font-bold">Annuleren</a>
-                    <form x-show="confirmDelete" method="post" action="{{route('pin.destroy', $pin)}}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="block px-4 py-2 text-sm text-gray-700 bg-red-500 text-white hover:bg-indigo-500 hover:text-white font-bold">Definitief verwijderen</button>
-                    </form>
+
                     @endif
                 @endauth
               </div>
