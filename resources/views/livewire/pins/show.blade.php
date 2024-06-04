@@ -1,14 +1,14 @@
 <div class="mt-4 flex justify-center min-h-screen" >
     <div class="md:w-3/4  gap-4 md:flex flex-row m-4">
         <div x-data="{
-            activeImage: '@if($pin->getMedia('main_image')->first()) {{$pin->getMedia('main_image')->first()->getUrl()}} @elseif($pin->getMedia('images')->first()) {{$pin->getMedia('images')->first()->getUrl()}} @else https://fakeimg.pl/600x400 @endif,
+            activeImage: '@if($pin->getMedia('main_image')->first()) {{$pin->getMedia('main_image')->first()->getUrl()}} @elseif($pin->getMedia('images')->first()) {{$pin->getMedia('images')->first()->getUrl()}} @else https://fakeimg.pl/600x400 @endif',
 
         }" class="md:w-1/2">
             <img class="w-full" :src="activeImage" alt="">
             <div class="carousel">
                 <div class="flex flex-wrap">
                     @if($pin->getMedia('main_image')->first())
-                        <div class="p-2">
+                        <div class="w-1/4 p-2">
                             <img class="cursor-pointer" @click="activeImage = `{{$pin->getMedia('main_image')->first()->getUrl()}}`" class="w-full" src="{{$pin->getMedia('main_image')->first()->getUrl()}}" alt="">
                         </div>
                     @endif
