@@ -22,7 +22,7 @@ class User extends Authenticatable implements HasMedia, FilamentUser
     {
 
         if ($panel->getId() === 'admin') {
-            return $this->hasRole('Admin');
+            return $this->hasRole('admin');
         }
 
         return true;
