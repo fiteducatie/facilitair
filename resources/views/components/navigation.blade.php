@@ -32,6 +32,14 @@
                             </span>
                             @endauth
                         </a>
+                        <a href="{{route('boards')}}" class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                            Mijn projectborden
+                            @auth
+                            <span class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+                                {{\Auth::user()->boards->count()}}
+                            </span>
+                            @endauth
+                        </a>
                         <a href="{{route('filament.app.resources.pins.create')}}" class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
                             + Nieuw
                         </a>

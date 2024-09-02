@@ -37,8 +37,14 @@ border: 1px solid rgba(255, 255, 255, 0.3);
                   <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
                 </svg>
               </button>
-              <div x-show="open" class="absolute right-0 z-10 w-48 bg-white rounded-md shadow-md mt-1 py-1">
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white">Delen</a>
+              <div x-show="open" class="absolute right-0 z-10 w-72 bg-white rounded-md shadow-md mt-1 py-1">
+                <a class="block px-4 py-2 text-sm text-gray-700 ">Toevoegen aan projectbord</a>
+                <select wire:change="openModal(1)" class="px-4 py-2 text-sm w-full text-gray-700">
+                    <option value="">Kies projectbord</option>
+                    @foreach(auth()->user()->boards as $board)
+                        <option @if($board->pins->contains($pin)) disabled @endif value="{{$board->id}}">{{$board->title}}</option>
+                    @endforeach
+                </select>
                 @auth
                     @if($pin->user_id == Auth::id() || Auth::user()->hasRole('admin'))
                     <a href="{{route('filament.app.resources.pins.edit', $pin->id)}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white">Wijzigen</a>
@@ -120,4 +126,10 @@ border: 1px solid rgba(255, 255, 255, 0.3);
             </div>
         </div>
     </div>
+
+    @if($modalBoardActive)
+    <div class="modal">
+        <button @click="saveToBoard()" >Add to projectboard</button>
+    </div>
+    @endif
 </div>

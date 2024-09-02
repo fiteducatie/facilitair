@@ -61,6 +61,10 @@ class User extends Authenticatable implements HasMedia, FilamentUser
         return $this->belongsToMany('App\Models\Pin', 'like_pin');
     }
 
+    public function boards() {
+        return $this->hasMany(Board::class);
+    }
+
     public function favorites() {
         return $this->belongsToMany('App\Models\Pin', 'save_pin');
     }

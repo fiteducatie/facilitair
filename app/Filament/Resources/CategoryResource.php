@@ -6,6 +6,7 @@ use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -34,8 +35,10 @@ class CategoryResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('parent_category_id')
-                    ->numeric(),
+                Select::make('parent_category_id')
+                    ->fromModel(static::$model, 'name')
+                    ->displayUsing(fn ($value) => $value ? $value->name : null)
+                    ->nullable(),
             ]);
     }
 

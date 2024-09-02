@@ -8,6 +8,7 @@ class Show extends Component
 {
 
     public $pin;
+    public $modalBoardActive = false;
 
     public function render()
     {
@@ -20,6 +21,15 @@ class Show extends Component
         }
         $this->pin->likes()->toggle(auth()->user()->id);
         $this->pin->refresh();
+    }
+
+    public function saveToBoard($pin) {
+        dd($pin);
+    }
+
+    public function openModal($pin) {
+
+        $this->modalBoardActive = true;
     }
 
     public function toggleSave() {
