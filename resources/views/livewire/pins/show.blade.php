@@ -38,15 +38,7 @@ border: 1px solid rgba(255, 255, 255, 0.3);
                 </svg>
               </button>
               <div x-show="open" class="absolute right-0 z-10 w-72 bg-white rounded-md shadow-md mt-1 py-1">
-                @auth
-                <a class="block px-4 py-2 text-sm text-gray-700 ">Toevoegen aan projectbord</a>
-                <select wire:change="openModal(1)" class="px-4 py-2 text-sm w-full text-gray-700">
-                    <option value="">Kies projectbord</option>
-                    @foreach(auth()->user()->boards as $board)
-                        <option @if($board->pins->contains($pin)) disabled @endif value="{{$board->id}}">{{$board->title}}</option>
-                    @endforeach
-                </select>
-                @endauth
+
                 @auth
                     @if($pin->user_id == Auth::id() || Auth::user()->hasRole('admin'))
                     <a href="{{route('filament.app.resources.pins.edit', $pin->id)}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white">Wijzigen</a>
@@ -65,6 +57,11 @@ border: 1px solid rgba(255, 255, 255, 0.3);
             <div wire:click="toggleSave" class="ml-2 action-save cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="@if($pin->savedByUser()) hotpink @else white @endif" viewBox="0 0 24 24" stroke-width="0" stroke="currentColor" class="w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
+                </svg>
+            </div>
+            <div wire:click="toggleProject" class="ml-2 action-save cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="0" stroke="currentColor" class="w-6 h-6">
+                    <path d="M 12 2 C 6.477 2 2 6.477 2 12 C 2 17.523 6.477 22 12 22 C 17.523 22 22 17.523 22 12 C 22 6.477 17.523 2 12 2 z M 12 4 C 16.418 4 20 7.582 20 12 C 20 16.418 16.418 20 12 20 C 7.582 20 4 16.418 4 12 C 4 7.582 7.582 4 12 4 z M 11 6 L 11 11 L 6 11 L 6 13 L 11 13 L 11 18 L 13 18 L 13 13 L 18 13 L 18 11 L 13 11 L 13 6 L 11 6 z" />
                 </svg>
             </div>
         </div>
@@ -134,4 +131,38 @@ border: 1px solid rgba(255, 255, 255, 0.3);
         <button @click="saveToBoard()" >Add to projectboard</button>
     </div>
     @endif
+
+
+@if($modalBoardActive)
+{{-- modal --}}
+<div id="myModal" class="fixed inset-0 z-50 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen px-4 text-center">
+      <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"></div>
+
+      <!-- Modal Content -->
+      <div class="z-10 inline-block w-full max-w-lg p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-lg">
+        <h3 class="text-lg font-medium leading-6 text-gray-900">Toevoegen aan projectbord:</h3>
+        <div class="mt-2">
+            <select wire:change="setBoard($event.target.value)" name="board" id="board" class="block w-full px-4 py-2 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">Maak een keuze</option>
+                @foreach(auth()->user()->boards as $board)
+                    <option  value="{{ $board->id }}">{{ $board->title }}</option>
+                @endforeach
+            </select>
+
+        </div>
+        <div class="mt-4">
+          <button wire:click="closeModal" id="closeModal" class="px-4 py-2 text-sm font-semibold text-white bg-red-500 rounded hover:bg-red-600">
+            Annuleren
+          </button>
+          <button wire:click="addToProject" id="addToProject" class="px-4 py-2 text-sm font-semibold text-white bg-green-500 rounded hover:bg-green-600">
+            Toevoegen
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+@endif
 </div>

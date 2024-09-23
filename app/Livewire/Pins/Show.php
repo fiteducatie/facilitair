@@ -2,13 +2,16 @@
 
 namespace App\Livewire\Pins;
 
+use App\Models\Board;
 use Livewire\Component;
 
 class Show extends Component
 {
 
     public $pin;
+    public $board;
     public $modalBoardActive = false;
+
 
     public function render()
     {
@@ -25,6 +28,34 @@ class Show extends Component
 
     public function saveToBoard($pin) {
         dd($pin);
+    }
+
+    public function toggleProject() {
+        if (!auth()->user()) {
+            return redirect()->route('login');
+        }
+
+        $this->openProjectModal($this->pin);
+    }
+
+    public function openProjectModal() {
+        $this->modalBoardActive = true;
+
+    }
+
+    public function closeProjectModal() {
+
+    }
+
+    public function addToProject() {
+        $board = Board::find($this->board);
+        $board->pins()->syncWithoutDetaching($this->pin);
+        $this->modalBoardActive = false;
+
+    }
+
+    public function setBoard($board) {
+        $this->board = $board;
     }
 
     public function openModal($pin) {
