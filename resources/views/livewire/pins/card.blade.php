@@ -45,7 +45,7 @@
       </div>
          <div class="mt-auto sm:hidden md:block">
             @foreach($pin->tags as $tag)
-            <span class="test__tag m-1 my-2 bg-white bg-opacity-60 py-1 px-4 rounded-md text-black"><a class="pointer-events-auto" href="{{route('welcome', ['t' => $tag->name, 'name'=> $tag->name])}}">#{{$tag->name}}</a> </span>
+            <span class="test__tag m-1 my-2 bg-white bg-opacity-60 py-1 px-4 rounded-md text-black"><a class="pointer-events-auto" href="{{route('welcome', ['s' => $tag->name, 'name'=> $tag->name])}}">#{{$tag->name}}</a> </span>
             @endforeach
           </div>
     </div>
