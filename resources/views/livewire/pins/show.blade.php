@@ -38,6 +38,7 @@ border: 1px solid rgba(255, 255, 255, 0.3);
                 </svg>
               </button>
               <div x-show="open" class="absolute right-0 z-10 w-72 bg-white rounded-md shadow-md mt-1 py-1">
+                @auth
                 <a class="block px-4 py-2 text-sm text-gray-700 ">Toevoegen aan projectbord</a>
                 <select wire:change="openModal(1)" class="px-4 py-2 text-sm w-full text-gray-700">
                     <option value="">Kies projectbord</option>
@@ -45,6 +46,7 @@ border: 1px solid rgba(255, 255, 255, 0.3);
                         <option @if($board->pins->contains($pin)) disabled @endif value="{{$board->id}}">{{$board->title}}</option>
                     @endforeach
                 </select>
+                @endauth
                 @auth
                     @if($pin->user_id == Auth::id() || Auth::user()->hasRole('admin'))
                     <a href="{{route('filament.app.resources.pins.edit', $pin->id)}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white">Wijzigen</a>
