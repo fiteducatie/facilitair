@@ -35,4 +35,13 @@ class Card extends Component
         $this->pin->refresh();
         // Toaster::success('Testing!');
     }
+
+    public function closeModal() {
+        $this->dispatch('closeProjectModal');
+    }
+
+    public function toggleProject() {
+        // emit open modal event
+        $this->dispatch('openProjectModal', $this->pin->id);
+    }
 }

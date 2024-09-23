@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PinController;
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Pages\Boards;
+use App\Livewire\Pages\BoardsDetail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/pins/my/', [PinController::class, 'myPins'])->name('pin.userpins');
     Route::get('/pin', [PinController::class, 'index'])->name('pin.index');
     Route::get('/boards', Boards::class)->name('boards');
+    Route::get('/boards/{board}', BoardsDetail::class)->name('board.show');
 
 });
 

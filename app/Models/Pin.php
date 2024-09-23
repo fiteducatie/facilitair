@@ -7,6 +7,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Tags\HasTags;
@@ -15,6 +16,15 @@ class Pin extends Model implements HasMedia
 {
     protected $guarded = [];
     use HasFactory, InteractsWithMedia, HasTags;
+
+    protected static function booted(): void
+    {
+        // static::addGlobalScope('ownpins', function (Builder $builder) {
+        //     if (!auth()->user()->hasRole('Admin')) {
+        //         $builder->where('pins.user_id', auth()->id());
+        //     }
+        // });
+    }
 
     public function user() {
         return $this->belongsTo(User::class);
@@ -33,7 +43,7 @@ class Pin extends Model implements HasMedia
     }
 
     public function saves() {
-        return $this->belongsToMany(User::class, 'save_pin');
+        return $this->belongsToMany(User::class, 'save_pin', 'pin_id', 'user_id');
     }
 
     public function likedByUser(){

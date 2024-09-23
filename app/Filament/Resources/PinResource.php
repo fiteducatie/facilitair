@@ -8,6 +8,7 @@ use App\Models\Pin;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\SpatieTagsInput;
@@ -20,6 +21,8 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -136,6 +139,10 @@ class PinResource extends Resource
     {
         return $table
             ->columns([
+                SpatieMediaLibraryImageColumn::make('main_image')
+                    ->label('Hoofdafbeelding')
+                    ->collection('main_image'),
+
                 Tables\Columns\TextColumn::make('user.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status'),
