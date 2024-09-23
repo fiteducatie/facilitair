@@ -41,6 +41,9 @@ class Card extends Component
     }
 
     public function toggleProject() {
+        if (!auth()->user()) {
+            return redirect()->route('login');
+        }
         // emit open modal event
         $this->dispatch('openProjectModal', $this->pin->id);
     }
